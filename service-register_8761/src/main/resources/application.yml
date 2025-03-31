@@ -1,0 +1,13 @@
+server:
+  port: 8761
+
+eureka:
+  instance:
+    hostname: register1  # Eureka 服务实例名
+  client:
+    register-with-eureka: true   # 允许向另一个 Eureka 注册
+    fetch-registry: true  # 允许从另一个 Eureka 拉取信息
+    service-url:
+      defaultZone: http://localhost:8762/eureka/  # 互相注册
+  server:
+    enable-self-preservation: false  # 关闭自我保护模式（用于测试）
