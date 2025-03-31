@@ -4,6 +4,15 @@ server:
 spring:
   application:
     name: service-consumer
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false  # 禁用 Ribbon，Spring Cloud LoadBalancer 替代它
+    feign:
+      client:
+        config:
+          default:
+            loggerLevel: FULL  # 配置Feign日志，便于查看请求
 
 eureka:
   client:
