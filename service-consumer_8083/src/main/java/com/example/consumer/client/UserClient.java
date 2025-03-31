@@ -1,43 +1,22 @@
 package com.example.consumer.client;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.Map;
 
-@Service
-public class UserClient {
-    @Autowired
-    private RestTemplate restTemplate;
+@FeignClient(name = "service-provider")  // 指定服务提供者
+public interface UserClient {
 
-    // 使用服务名称（负载均衡）
-    private static final String PROVIDER_URL = "http://service-provider/users";
+    @GetMapping("/users/{id}")
+    String getUser(@PathVariable("id") int id);
 
-    // GET 请求
-    public String getUser(int id) {
-        return restTemplate.getForObject(PROVIDER_URL + "/" + id, String.class);
-    }
+    @PostMapping("/users")
+    String createUser(@RequestBody Map<String, String> user);
 
-    // POST 请求
-    public String createUser(String name) {
-        Map<String, String> request = new HashMap<>();
-        request.put("name", name);
-        return restTemplate.postForObject(PROVIDER_URL, request, String.class);
-    }
+    @PutMapping("/users/{id}")
+    String updateUser(@PathVariable("id") int id, @RequestBody Map<String, String> user);
 
-    // PUT 请求
-    public String updateUser(int id, String name) {
-        Map<String, String> request = new HashMap<>();
-        request.put("name", name);
-        restTemplate.put(PROVIDER_URL + "/" + id, request);
-        return "用户更新成功";
-    }
-
-    // DELETE 请求
-    public String deleteUser(int id) {
-        restTemplate.delete(PROVIDER_URL + "/" + id);
-        return "用户删除成功";
-    }
+    @DeleteMapping("/users/{id}")
+    String deleteUser(@PathVariable("id") int id);
 }
