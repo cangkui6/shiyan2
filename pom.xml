@@ -40,6 +40,7 @@
         <module>service-provider_8082</module>
         <module>service-consumer_8084</module>
         <module>service-register_8762</module>
+        <module>service-provider_8085</module>
     </modules>
 
     <dependencyManagement>
