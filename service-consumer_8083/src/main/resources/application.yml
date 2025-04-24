@@ -24,3 +24,4 @@ eureka:
     instance-id: consumer-8083
     prefer-ip-address: true
 
+
